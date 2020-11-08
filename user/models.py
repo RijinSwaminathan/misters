@@ -10,10 +10,23 @@ from user.managers import UserManager
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    username = models.CharField('username', max_length=35, blank=False,
+    username = models.CharField(_('username'), max_length=35, blank=False,
                                 unique=True)
-    password = models.CharField('password', max_length=100, blank=False, null=False)
-
+    password = models.CharField(_('password'), max_length=100, blank=False, null=False)
+    is_staff = models.BooleanField(
+        _('Staff status'),
+        default=False,
+        help_text=_(
+            'Designates whether the user can log into this admin site.'),
+    )
+    is_superuser = models.BooleanField(
+        _('Admin status'),
+        default=False,
+        help_text=_(
+            'Designates that this user has all permissions without '
+            'explicitly assigning them.'
+        ),
+    )
     is_active = models.BooleanField(
         'active',
         default=True,
@@ -28,3 +41,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = [username, password]
     objects = UserManager()
+
+    class Meta:
+        db_table = 'USER'
+        verbose_name = _('user')
+        verbose_name_plural = _('users')
+
+    def __str__(self):
+        return f"{self.username}"
