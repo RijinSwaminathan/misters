@@ -20,19 +20,6 @@ def info(message):
     logger.info(message)
 
 
-def debug(message):
-    # method for debug log
-    logger = logging.getLogger('Misters-DEBUG')
-    logger.setLevel(logging.DEBUG)
-    filename = 'logs/Debug/debug.log'
-    log_file_exists(filename)
-    handler = RotatingFileHandler(filename, maxBytes=2000, backupCount=100)
-    console = logging.StreamHandler()
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
-    logger.debug(message)
-
-
 def warning(message):
     # method for warning log
     logger = logging.getLogger('Misters-WARNING')
